@@ -10,12 +10,40 @@ app.use(minify());
 app.use(bodyParser.json());
 app.use(cors());
 
-const connection = mysql.createConnection({
+const db_config = {
   host     : 'us-cdbr-sl-dfw-01.cleardb.net',
   user     : 'bdff77578ec96c',
   password : '715adddc',
   database: 'ibmx_335912eab7de8c3'
-});
+};
+
+
+let connection;
+
+
+function handleDisconnect() {
+  connection = mysql.createConnection(db_config); 
+
+  connection.connect(function(err) {
+    if (err) {
+        console.log("Failed to connect to database:", err);
+        setTimeout(handleDisconnect, 2000);
+    } else {
+        console.log("========= Connected to database ==========");
+    }
+  });
+
+  connection.on('error', (err) => {
+    console.log('Database error', err);
+    if (err.code === 'PROTOCOL_CONNECTION_LOST') {
+      handleDisconnect();                         
+    } else {
+      throw err;
+    }
+  });
+}
+
+handleDisconnect();
 
 connection.connect((err) => {
     if (err) {
@@ -24,6 +52,7 @@ connection.connect((err) => {
         console.log("========= Connected to database ==========");
     }
 });
+
 app.get('/', (req, res) => {
     return res.send({"moviesdb" : "Movies backend."});
 });
@@ -71,12 +100,12 @@ app.post('/api/user/connect', (req, res) => {
 });
 
 app.post('/api/favorite', (req, res) => {
-    const { userId, videoId, videoType } = req.body;
+    const { userId, videoId, videoType, url } = req.body;
 
     if (!userId || !videoId || videoType.length < 4) {
         return res.status(400).send("The userId or the videoId are not valid")
     }
-    const values = { videoId: videoId, userId: userId, videoType: videoType };
+    const values = { videoId: videoId, userId: userId, videoType: videoTypen, url: url };
 
     connection.query("INSERT INTO `favorite` SET ?" , values, (err, result) => {
         if (err) {
@@ -110,7 +139,7 @@ app.get('/api/favorite/:userId', (req, res) => {
         return res.status(400).send("The userId or the videoId are not valid")
     }
 
-    let sql = "SELECT videoId, videoType FROM ?? WHERE ?? = ?";
+    let sql = "SELECT videoId, videoType, url FROM ?? WHERE ?? = ?";
     const values = ['favorite', 'userId', userId];
     sql = mysql.format(sql, values);
     connection.query(sql, (error, results, fields) => {
@@ -122,7 +151,7 @@ app.get('/api/favorite/:userId', (req, res) => {
             return res.send(videos);
         }
         results.forEach((element) => {
-            videos.push({ videoId: element.videoId, videoType: element.videoType });
+            videos.push({ videoId: element.videoId, videoType: element.videoType, url: element.url });
         }, this);
         return res.status(200).send(videos);
     });
@@ -134,7 +163,7 @@ app.listen(process.env.PORT || 6789, () => {
 });
 
 process.on( 'SIGINT', () => {
-  console.log( "\n========== Stop database connection ==========");
+  console.log( "\n========== Database connection stopped  ==========");
   connection.end();
   process.exit();
 })
