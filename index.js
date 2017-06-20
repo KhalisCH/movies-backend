@@ -129,7 +129,7 @@ app.get('/api/favorite/:userId', (req, res) => {
 });
 
 // start the server
-app.listen(6789, () => {
+app.listen(process.env.PORT || 6789, () => {
     console.log('Server listening on port 6789!');
 });
 
