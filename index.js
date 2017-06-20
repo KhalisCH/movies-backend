@@ -14,7 +14,7 @@ const connection = mysql.createConnection({
   host     : 'us-cdbr-sl-dfw-01.cleardb.net',
   user     : 'bdff77578ec96c',
   password : '715adddc',
-  //database: '`ibmx_335912eab7de8c3`'
+  database: 'ibmx_335912eab7de8c3'
 });
 
 connection.connect((err) => {
@@ -28,7 +28,7 @@ connection.connect((err) => {
 app.post('/api/user/subscribe', (req, res) => {
     const { username, password, email } = req.body;
 
-    if (!username || username.length <= 3 || !password || password.length <= 3 || !email ||email.length < 4) {
+    if (!username || username.length <= 3 || !password || password.length <= 3 || !email || email.length < 4) {
         return res.status(400).send("The username, password or email are not valid: not null and length > 3")
     }
     const values = { username: username, password: hash.generate(password), email: email } ;
