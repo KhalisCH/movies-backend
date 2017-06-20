@@ -24,6 +24,9 @@ connection.connect((err) => {
         console.log("========= Connected to database ==========");
     }
 });
+app.get('/', (req, res) => {
+    return res.send({"moviesdb" : "Movies backend."});
+});
 
 app.post('/api/user/subscribe', (req, res) => {
     const { username, password, email } = req.body;
