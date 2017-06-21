@@ -105,7 +105,7 @@ app.post('/api/favorite', (req, res) => {
     if (!userId || !videoId || videoType.length < 4) {
         return res.status(400).send("The userId or the videoId are not valid")
     }
-    const values = { videoId: videoId, userId: userId, videoType: videoTypen, url: url };
+    const values = { videoId: videoId, userId: userId, videoType: videoType, url: url };
 
     connection.query("INSERT INTO `favorite` SET ?" , values, (err, result) => {
         if (err) {
