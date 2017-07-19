@@ -1,3 +1,5 @@
+'use strict';
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const minify = require('express-minify');
@@ -9,6 +11,8 @@ const app = express();
 app.use(minify());
 app.use(bodyParser.json());
 app.use(cors());
+
+const PORT = process.env.PORT || 6789;
 
 const db_config = {
   host     : 'us-cdbr-sl-dfw-01.cleardb.net',
@@ -157,13 +161,15 @@ app.get('/api/favorite/:userId', (req, res) => {
     });
 });
 
+//const PORT = process.env.PORT ? process.env.PORT : 6789;
+
 // start the server
-app.listen(process.env.PORT || 6789, () => {
-    console.log('Server listening on port 6789!');
+app.listen(PORT, () => {
+    console.log(`Running on port ${PORT}`);
 });
 
-process.on( 'SIGINT', () => {
-  console.log( "\n========== Database connection stopped  ==========");
+process.on('SIGINT', () => {
+  console.log( "\n========== Database connection stopped & Server killed ==========");
   connection.end();
   process.exit();
 })
