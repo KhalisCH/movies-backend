@@ -1,3 +1,5 @@
+'use strict';
+
 let request = require("request");
 let assert = require('assert');
 let api = require("../index.js");
