@@ -15,15 +15,13 @@ app.use(cors());
 const PORT = process.env.PORT || 6789;
 
 const db_config = {
-  host     : 'us-cdbr-sl-dfw-01.cleardb.net',
-  user     : 'bdff77578ec96c',
-  password : '715adddc',
-  database: 'ibmx_335912eab7de8c3'
+  host     : process.env.DB_HOST,
+  user     : process.env.DB_USER,
+  password : process.env.DB_PASSWORD,
+  database : process.env.DB_DATABASE
 };
 
-
 let connection;
-
 
 function handleDisconnect() {
   connection = mysql.createConnection(db_config); 
