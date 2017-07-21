@@ -14,6 +14,7 @@ describe("Movies backend tests", () => {
     it("returns status code 200", () => {
       request.get(base_url, (error, response, body) => {
         assert.equal(200, response.statusCode);
+        done();
       });
     });
   });
@@ -84,6 +85,33 @@ describe("Movies backend tests", () => {
   describe("POST /api/user/connect with no password", () => {
     it("returns status code 400", () => {
       request.post({url: base_url + '/api/user/connect', form: {username:'test'}}, (error, response, body) => {
+        assert.equal(400, response.statusCode);
+        done();
+      });
+    });
+  });
+
+  describe("POST /api/user/connect with bad length for username", () => {
+    it("returns status code 400", () => {
+      request.post({url: base_url + '/api/user/connect', form: {username:'te', password:'test'}}, (error, response, body) => {
+        assert.equal(400, response.statusCode);
+        done();
+      });
+    });
+  });
+
+  describe("POST /api/user/connect with bad length for password", () => {
+    it("returns status code 400", () => {
+      request.post({url: base_url + '/api/user/connect', form: {username:'test', password:'te'}}, (error, response, body) => {
+        assert.equal(400, response.statusCode);
+        done();
+      });
+    });
+  });
+
+   describe("POST /api/user/connect with good inputs", () => {
+    it("returns status code 200", () => {
+      request.post({url: base_url + '/api/user/connect', form: {username:'test', password:'test'}}, (error, response, body) => {
         assert.equal(200, response.statusCode);
         done();
       });
