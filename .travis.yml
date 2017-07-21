@@ -1,5 +1,8 @@
 language: node_js
 node_js:
-    - "7.7.0"
+- 7.7.0
 notifications:
-    slack: movies-ios:UJoXBYhHsxo8jXgMLBD93Dt9
+  slack: movies-ios:UJoXBYhHsxo8jXgMLBD93Dt9
+deploy:
+  api_key:
+    secure: gxiVR8mKSEJBIfTcbrUz6z7KZ+/C/DvzZpeJc6/ZtlU4IkN5/43ptHZKDIYVT3g2eixzNA3kbMtx9EAPToh9RBZA1hvkqIQ4CuATAAJxLzoplihofsu5oWvXZu/ZT1v8Dd1ZB/rgSrvTb6r2Xa/VJq/U+s1eM5b+emWTc7rvdGFc2rtDNLfGaJpuhd9ANdF28feJtvejuCsXDp2HqwwClU7P9wE0wzeKMKXbsh6YDgE5+DZCHApG++rXcEiMMSdsbutylSfafPAcu1SMS2qNkj/TmyTX7TrKOgpMqcTQMJhwXc42CmVNkg2/gaWPWbK64QIi1vh2B5hi+AWvBbOT8UNwsAiLWfA+T+C3fAy2lr/Q9enJbJ6m/sRLQnrcBLMY0rTO0DrufQBHx7xca2hhpzzDwZXjhaJDZYDt0YQMn6szY6/boWfI52ZG9uiFamZrLOgt1B3nnjmNM4GdIkjBJANnFc/xvoEoSAI84CJODI+ZtbGmpcYLzc0EUOx1IY2Zl6kU4uhRGdouM6EpyUiMl9cBoozKmIlya4rc9uUe1cCbINsF1Bx8MW8QkMSAOHwIHKDE6WtJJIGHemc4mnz7MbmQ1Kh60WOrGxpLvvNM0bJx1/5aJXbovLQSPmmawcCQ8jj7KyLqEe3rvk6ednxDg79TfiaEXO2lMGZenFJTycw=
