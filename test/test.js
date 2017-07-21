@@ -7,7 +7,7 @@ let should = require("should");
 let server = require('../index');
 const base_url = "http://localhost:" + process.env.PORT || 6789 + "/";
 
-describe("Movies backend test", () => {
+describe("Movies backend tests", () => {
  
  
   describe("GET /", () => {
